@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "dataCollectionRuleName": {
+      "type": "string",
+      "defaultValue": "dcr-security-events"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "southafricanorth"
+    },
+    "workspaceResourceId": {
+      "type": "string",
+      "defaultValue": "/subscriptions/9ffdcd73-80c4-4d54-9cb0-7c927be84619/resourceGroups/rg-sentinel-lab/providers/Microsoft.OperationalInsights/workspaces/sentinel-lab-ws"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Insights/dataCollectionRules",
+      "apiVersion": "2022-06-01",
+      "name": "[parameters('dataCollectionRuleName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "dataSources": {
+          "windowsEventLogs": [
+            {
+              "name": "SecurityEvents",
+              "streams": [
+                "Microsoft-SecurityEvent"
+              ],
+              "xPathQueries": [
+                "Security!*[System[(EventID=4624 or EventID=4625)]]"
+              ]
+            }
+          ]
+        },
+        "destinations": {
+          "logAnalytics": [
+            {
+              "workspaceResourceId": "[parameters('workspaceResourceId')]",
+              "name": "sentinel-workspace"
+            }
+          ]
+        },
+        "dataFlows": [
+          {
+            "streams": [
+              "Microsoft-SecurityEvent"
+            ],
+            "destinations": [
+              "sentinel-workspace"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
