@@ -1,7 +1,7 @@
-Threat Detection with Microsoft Sentinel
+# Threat Detection with Microsoft Sentinel
 
 ## 📌 Project Overview
-This project demonstrates a fully functional cloud-native SIEM (Security Information and Event Management) pipeline using **Microsoft Sentinel**. It simulates an RDP brute-force attack against a Windows Virtual Machine, ingests the security logs, and automatically triggers a High-Severity incident using KQL (Kusto Query Language) mapped to the MITRE ATT&CK framework.
+This project demonstrates a fully functional cloud-native SIEM pipeline using **Microsoft Sentinel**. It simulates an RDP brute-force attack, ingests the security logs, and automatically triggers a High-Severity incident using KQL mapped to the MITRE ATT&CK framework.
 
 ## 🏗️ Architecture
 ![Sentinel Architecture](Azure%20Sentinel%20RDP%20Attack%20Detection%20Flow.png)
@@ -21,21 +21,23 @@ This project demonstrates a fully functional cloud-native SIEM (Security Informa
 
 ## 💻 The KQL Detection Query
 
-```kql
-SecurityEvent
+<pre><code>SecurityEvent
 | where EventID == 4625
 | summarize FailedLogons = count() by Account = tostring(TargetUserName), Computer, IpAddress, bin(TimeGenerated, 5m)
 | where FailedLogons >= 5
+</code></pre>
 
-📸 Proof of Concept
-1. Failed Logins Detected (KQL Query):
-https://github.com/vaino118/Threat-Detection-with-Microsoft-Sentinel/blob/main/incident-detected.png
+## 📸 Proof of Concept
 
-2. Detection Rule Triggered:
-https://github.com/vaino118/Threat-Detection-with-Microsoft-Sentinel/blob/main/logs-success.png
+**1. Failed Logins Detected (KQL Query):**
+![Logs](logs-success.png)
 
-⚠️ Engineering Notes & Workarounds
-Because this was built on an Azure Student Account, Microsoft Entra ID permissions restricted the standard Defender portal UI. To bypass this and follow Infrastructure as Code (IaC) principles, the Data Collection Rules and Analytics Rules were deployed using custom JSON ARM templates via the Azure Portal.
+**2. Detection Rule Triggered:**
+![Incident](incident-detected.png)
+
+## ⚠️ Engineering Notes & Workarounds
+
+Because this was built on an Azure Student Account, Microsoft Entra ID permissions restricted the standard Defender portal UI. To bypass this and follow **Infrastructure as Code (IaC)** principles, the Data Collection Rules and Analytics Rules were deployed using custom JSON ARM templates via the Azure Portal. 
 
 Furthermore, because the initial VM was a Windows 10 Client, the Azure Monitor Agent was deployed via PowerShell in Azure Cloud Shell to bypass standard extension gallery restrictions.
 
