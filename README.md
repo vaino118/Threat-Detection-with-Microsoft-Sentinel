@@ -27,7 +27,7 @@ SecurityEvent
 | where FailedLogons >= 5
 📸 Proof of Concept
 Failed Logins Detected (KQL Query):
-https://logs-success.png/
+https://github.com/vaino118/Threat-Detection-with-Microsoft-Sentinel/blob/main/incident-detected.png
 
 Detection Rule Triggered (Incident):
 https://incident-detected.png/
