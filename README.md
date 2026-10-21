@@ -1,4 +1,3 @@
-markdown
 # Threat Detection with Microsoft Sentinel
 
 ## 📌 Project Overview
