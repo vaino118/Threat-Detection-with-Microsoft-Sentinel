@@ -25,12 +25,6 @@ SecurityEvent
 | where EventID == 4625
 | summarize FailedLogons = count() by Account = tostring(TargetUserName), Computer, IpAddress, bin(TimeGenerated, 5m)
 | where FailedLogons >= 5
-📸 Proof of Concept
-Failed Logins Detected (KQL Query):
-https://github.com/vaino118/Threat-Detection-with-Microsoft-Sentinel/blob/main/incident-detected.png
 
-Detection Rule Triggered (Incident):
-https://incident-detected.png/
-
-⚠️ Engineering Notes & Workarounds
+##⚠️ Engineering Notes & Workarounds
 Because this was built on an Azure Student Account, Microsoft Entra ID permissions restricted the standard Defender portal UI. To bypass this and follow Infrastructure as Code (IaC) principles, the Data Collection Rules and Analytics Rules were deployed using custom JSON ARM templates via the Azure Portal. Furthermore, because the initial VM was a Windows 10 Client, the Azure Monitor Agent was deployed via PowerShell in Azure Cloud Shell to bypass standard extension gallery restrictions.
