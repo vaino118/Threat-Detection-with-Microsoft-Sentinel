@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+      "apiVersion": "2023-11-01",
+      "name": "sentinel-lab-ws/Microsoft.SecurityInsights/BruteForceDetection",
+      "kind": "Scheduled",
+      "properties": {
+        "displayName": "Brute Force Detection",
+        "description": "Detects multiple failed logon attempts (Event ID 4625) from the same account/IP within 5 minutes.",
+        "severity": "High",
+        "enabled": true,
+        "query": "SecurityEvent\n| where EventID == 4625\n| summarize FailedLogons = count() by Account = tostring(TargetUserName), Computer, IpAddress, bin(TimeGenerated, 5m)\n| where FailedLogons >= 5",
+        "queryFrequency": "PT5M",
+        "queryPeriod": "PT5M",
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 0,
+        "suppressionDuration": "PT5H",
+        "suppressionEnabled": false,
+        "tactics": ["CredentialAccess"],
+        "techniques": ["T1110"],
+        "incidentConfiguration": {
+          "createIncident": true
+        }
+      }
+    }
+  ]
+}
