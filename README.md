@@ -38,3 +38,7 @@ https://github.com/vaino118/Threat-Detection-with-Microsoft-Sentinel/blob/main/l
 Because this was built on an Azure Student Account, Microsoft Entra ID permissions restricted the standard Defender portal UI. To bypass this and follow Infrastructure as Code (IaC) principles, the Data Collection Rules and Analytics Rules were deployed using custom JSON ARM templates via the Azure Portal.
 
 Furthermore, because the initial VM was a Windows 10 Client, the Azure Monitor Agent was deployed via PowerShell in Azure Cloud Shell to bypass standard extension gallery restrictions.
+
+## 📁 Repository Files
+* `dcr-template.json`: The Infrastructure as Code template used to deploy the Data Collection Rule.
+* `analytics-rule.json`: The Infrastructure as Code template used to deploy the Sentinel Analytics Rule.
