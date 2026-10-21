@@ -1,10 +1,10 @@
-# Threat Detection with Microsoft Sentinel
+Threat Detection with Microsoft Sentinel
 
 ## 📌 Project Overview
 This project demonstrates a fully functional cloud-native SIEM (Security Information and Event Management) pipeline using **Microsoft Sentinel**. It simulates an RDP brute-force attack against a Windows Virtual Machine, ingests the security logs, and automatically triggers a High-Severity incident using KQL (Kusto Query Language) mapped to the MITRE ATT&CK framework.
 
 ## 🏗️ Architecture
-![Sentinel Architecture](architecture.png)
+![Sentinel Architecture](Azure%20Sentinel%20RDP%20Attack%20Detection%20Flow.png)
 
 ## 🛠️ Technologies Used
 * **Microsoft Sentinel** (SIEM)
