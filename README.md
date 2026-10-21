@@ -20,11 +20,21 @@ This project demonstrates a fully functional cloud-native SIEM (Security Informa
 5. **The Alert:** If 5 or more failed logins occur within a 5-minute window, Sentinel generates a High-Severity Incident mapped to MITRE ATT&CK **T1110 (Brute Force)**.
 
 ## 💻 The KQL Detection Query
+
 ```kql
 SecurityEvent
 | where EventID == 4625
 | summarize FailedLogons = count() by Account = tostring(TargetUserName), Computer, IpAddress, bin(TimeGenerated, 5m)
 | where FailedLogons >= 5
 
-##⚠️ Engineering Notes & Workarounds
-Because this was built on an Azure Student Account, Microsoft Entra ID permissions restricted the standard Defender portal UI. To bypass this and follow Infrastructure as Code (IaC) principles, the Data Collection Rules and Analytics Rules were deployed using custom JSON ARM templates via the Azure Portal. Furthermore, because the initial VM was a Windows 10 Client, the Azure Monitor Agent was deployed via PowerShell in Azure Cloud Shell to bypass standard extension gallery restrictions.
+📸 Proof of Concept
+1. Failed Logins Detected (KQL Query):
+https://github.com/vaino118/Threat-Detection-with-Microsoft-Sentinel/blob/main/incident-detected.png
+
+2. Detection Rule Triggered:
+https://github.com/vaino118/Threat-Detection-with-Microsoft-Sentinel/blob/main/logs-success.png
+
+⚠️ Engineering Notes & Workarounds
+Because this was built on an Azure Student Account, Microsoft Entra ID permissions restricted the standard Defender portal UI. To bypass this and follow Infrastructure as Code (IaC) principles, the Data Collection Rules and Analytics Rules were deployed using custom JSON ARM templates via the Azure Portal.
+
+Furthermore, because the initial VM was a Windows 10 Client, the Azure Monitor Agent was deployed via PowerShell in Azure Cloud Shell to bypass standard extension gallery restrictions.
